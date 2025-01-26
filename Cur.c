@@ -26,7 +26,12 @@ int main (void)
 
     printf ("min = %d\n", min_month_temperature (info, number, 9));
 
-     //print (&info, number); // нашей функцией выводим на экран
+    printf ("average = %d\n", average_month_temperature (info, number, 9)); 
+
+     printf ("max = %d\n", max_month_temperature (info, number, 9)); 
+
+
+    print (info, number); // нашей функцией выводим на экран
                                                                                                         /*printf ("\nSort by T\n");
                                                                                                         SortByT (info, number);
                                                                                                         print (info, number); // нашей функцией выводим на экран

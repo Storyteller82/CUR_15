@@ -4,7 +4,7 @@
 //#include "temp_api.h"
 
 
-/*struct sensor
+struct sensor
 {
     uint8_t day;
     uint8_t month;
@@ -13,28 +13,30 @@
     uint8_t minit;
     int8_t t;
 };
-*/
-uint8_t average_month_temperature(struct sensor *info, int n, uint8_t month)
+
+int average_month_temperature(struct sensor *info, int n, uint8_t month)
 {
     int sum = 0, cnt = 0;
 
-    for (int i = 0; i <= n; i++)
+    for (int i = 0; i < n; i++)
     {
         if (info[i].month == month)
         {
-            sum += info[i].t;
+            sum = sum + info[i].t;
             cnt++;
         }
     }
 
-    return sum / cnt;
+    sum = sum / cnt;
+
+    return sum;
 }
 
-uint8_t max_month_temperature(struct sensor *info, int n, uint8_t month)
+int8_t max_month_temperature(struct sensor *info, int n, uint8_t month)
 {
-    int tmp = 0;
+    int8_t tmp = -120;
 
-    for (int i = 0; i <= n; i++)
+    for (int i = 0; i < n; i++)
     {
         if (info[i].month == month)
         {
@@ -45,11 +47,11 @@ uint8_t max_month_temperature(struct sensor *info, int n, uint8_t month)
     return tmp;
 }
 
-uint8_t min_month_temperature(struct sensor *info, int n, uint8_t month)
+int8_t min_month_temperature(struct sensor *info, int n, uint8_t month)
 {
-    int tmp = 0;
+   int8_t tmp = 120;
 
-    for (int i = 0; i <= n; i++)
+    for (int i = 0; i < n; i++)
     {
         if (info[i].month == month)
         {
@@ -60,11 +62,11 @@ uint8_t min_month_temperature(struct sensor *info, int n, uint8_t month)
     return tmp;
 }
 
-uint8_t average_annual_temperature(struct sensor *info, int n, uint16_t year)
+int average_annual_temperature(struct sensor *info, int n, uint16_t year)
 {
     int sum = 0, cnt = 0;
 
-    for (int i = 0; i <= n; i++)
+    for (int i = 0; i < n; i++)
     {
         if (info[i].year == year)
         {
@@ -76,11 +78,11 @@ uint8_t average_annual_temperature(struct sensor *info, int n, uint16_t year)
     return sum / cnt;
 }
 
-uint8_t max_annual_temperature(struct sensor *info, int n, uint16_t year)
+int8_t max_annual_temperature(struct sensor *info, int n, uint16_t year)
 {
-    int tmp = 0;
+    int8_t tmp = -120;
 
-    for (int i = 0; i <= n; i++)
+    for (int i = 0; i < n; i++)
     {
         if (info[i].year == year)
         {
@@ -91,11 +93,11 @@ uint8_t max_annual_temperature(struct sensor *info, int n, uint16_t year)
     return tmp;
 }
 
-uint8_t min_annual_temperature(struct sensor *info, int n, uint16_t year)
+int8_t min_annual_temperature(struct sensor *info, int n, uint16_t year)
 {
-    int tmp = 0;
+    int8_t tmp = 120;
 
-    for (int i = 0; i <= n; i++)
+    for (int i = 0; i < n; i++)
     {
         if (info[i].year == year)
         {
@@ -105,8 +107,6 @@ uint8_t min_annual_temperature(struct sensor *info, int n, uint16_t year)
     }
     return tmp;
 }
-
-
 
 
 
@@ -193,9 +193,21 @@ void save_bin (struct sensor* info, int number)
 int AddInfo (struct sensor* info)
 {
     int counter = 0;
-        AddRecord (info, counter++, 2021,9,16,10,10,9);
-        AddRecord (info, counter++, 2022,9,2,13,13,-9);
+        AddRecord (info, counter++, 2021,9,16,10,10,20);
+        AddRecord (info, counter++, 2022,9,2,13,13,-1);
         AddRecord (info, counter++, 2021,1,7,15,15,8);
         AddRecord (info, counter++, 2021,9,5,17,17,1);
+        AddRecord (info, counter++, 2021,9,16,10,11,9);
+        AddRecord (info, counter++, 2022,9,2,13,14,-9);
+        AddRecord (info, counter++, 2021,1,7,15,15,8);
+        AddRecord (info, counter++, 2021,1,5,17,16,1);
+        AddRecord (info, counter++, 2021,1,16,10,17,9);
+        AddRecord (info, counter++, 2022,9,2,13,18,-3);
+        AddRecord (info, counter++, 2021,1,7,15,19,8);
+        AddRecord (info, counter++, 2021,1,5,17,20,1);
+        AddRecord (info, counter++, 2021,9,16,10,21,9);
+        AddRecord (info, counter++, 2022,9,2,13,22,-9);
+        AddRecord (info, counter++, 2021,1,7,15,23,8);
+        AddRecord (info, counter++, 2021,9,5,17,24,1);
         return counter;
 }
