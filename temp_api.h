@@ -1,14 +1,23 @@
 #include <stdint.h>
 //#include "temp_api.c"
 
+struct sensor
+{
+    uint8_t day;
+    uint8_t month;
+    uint16_t year;
+    uint8_t hour;
+    uint8_t minit;
+    int8_t t;
+};
 
-int8_t average_month_temperature (struct sensor* info, int n, uint8_t month);
+int average_month_temperature (struct sensor* info, int n, uint8_t month);
 
 int8_t max_month_temperature (struct sensor* info, int n, uint8_t month);
 
 int8_t min_month_temperature (struct sensor* info, int n, uint8_t month);
 
-int8_t average_annual_temperature (struct sensor* info, int n, uint16_t year);
+int average_annual_temperature (struct sensor* info, int n, uint16_t year);
 
 int8_t max_annual_temperature (struct sensor* info, int n, uint16_t year);
 

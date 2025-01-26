@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdint.h>
 //#include <string.h>
-#include "temp_api.h"
 #define SIZE 30
 
-struct sensor
+
+
+/*struct sensor
 {
     uint8_t day;
     uint8_t month;
@@ -13,11 +14,11 @@ struct sensor
     uint8_t minit;
     int8_t t;
 };
+*/
 
-struct sensor info[SIZE]; // создаем массив структур
-
+#include "temp_api.h"
 // ====================================================================================================
-
+struct sensor info[SIZE]; // создаем массив структур
 int main (void)
 {
     

@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdint.h>
 //#include "Cur.c"
-//#include "temp_api.h"
+#include "temp_api.h"
 
 
-struct sensor
+
+
+/*struct sensor
 {
     uint8_t day;
     uint8_t month;
@@ -12,7 +14,9 @@ struct sensor
     uint8_t hour;
     uint8_t minit;
     int8_t t;
-};
+};*/
+
+
 
 int average_month_temperature(struct sensor *info, int n, uint8_t month)
 {
@@ -26,10 +30,7 @@ int average_month_temperature(struct sensor *info, int n, uint8_t month)
             cnt++;
         }
     }
-
-    sum = sum / cnt;
-
-    return sum;
+    return sum / cnt;
 }
 
 int8_t max_month_temperature(struct sensor *info, int n, uint8_t month)
@@ -74,7 +75,6 @@ int average_annual_temperature(struct sensor *info, int n, uint16_t year)
             cnt++;
         }
     }
-
     return sum / cnt;
 }
 
