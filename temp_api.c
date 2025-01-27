@@ -1,22 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
-//#include "Cur.c"
 #include "temp_api.h"
-
-
-
-
-/*struct sensor
-{
-    uint8_t day;
-    uint8_t month;
-    uint16_t year;
-    uint8_t hour;
-    uint8_t minit;
-    int8_t t;
-};*/
-
-
 
 int average_month_temperature(struct sensor *info, int n, uint8_t month)
 {
@@ -35,7 +19,8 @@ int average_month_temperature(struct sensor *info, int n, uint8_t month)
 
 int8_t max_month_temperature(struct sensor *info, int n, uint8_t month)
 {
-    int8_t tmp = -120;
+    int8_t tmp = -120; 
+
 
     for (int i = 0; i < n; i++)
     {
@@ -109,17 +94,9 @@ int8_t min_annual_temperature(struct sensor *info, int n, uint16_t year)
 }
 
 
-
-
-
-
 // ==============================================================================================
 // ================================= старые функции =============================================
 // ==============================================================================================
-
-
-
-
 
 
 void changeIJ (struct sensor* info, int i, int j) // Обмен местами

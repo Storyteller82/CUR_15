@@ -1,5 +1,4 @@
 #include <stdint.h>
-//#include "temp_api.c"
 
 struct sensor
 {
@@ -10,6 +9,7 @@ struct sensor
     uint8_t minit;
     int8_t t;
 };
+
 
 int average_month_temperature (struct sensor* info, int n, uint8_t month);
 
@@ -24,17 +24,9 @@ int8_t max_annual_temperature (struct sensor* info, int n, uint16_t year);
 int8_t min_annual_temperature (struct sensor* info, int n, uint16_t year);
 
 
-
-
-
-
 // ==============================================================================================
 // ================================= старые функции =============================================
 // ==============================================================================================
-
-
-
-
 
 
 unsigned int DateToInt (struct sensor* info); // Преобразовать дату в одно число
