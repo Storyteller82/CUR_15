@@ -48,51 +48,80 @@ int8_t min_month_temperature(struct sensor *info, int n, uint8_t month)
     return tmp;
 }
 
-int average_annual_temperature(struct sensor *info, int n, uint16_t year)
+int average_annual_temperature(struct sensor *info, int n)
 {
     int sum = 0, cnt = 0;
 
     for (int i = 0; i < n; i++)
     {
-        if (info[i].year == year)
-        {
+       // if (info[i].year == year)
+        //{
             sum += info[i].t;
             cnt++;
-        }
+        //}
     }
     return sum / cnt;
 }
 
-int8_t max_annual_temperature(struct sensor *info, int n, uint16_t year)
+int8_t max_annual_temperature(struct sensor *info, int n)
 {
     int8_t tmp = -120;
 
     for (int i = 0; i < n; i++)
     {
-        if (info[i].year == year)
-        {
+       // if (info[i].year == year)
+        //{
             if (tmp <= info[i].t)
                 tmp = info[i].t;
-        }
+       // }
     }
     return tmp;
 }
 
-int8_t min_annual_temperature(struct sensor *info, int n, uint16_t year)
+int8_t min_annual_temperature(struct sensor *info, int n)
 {
     int8_t tmp = 120;
 
     for (int i = 0; i < n; i++)
     {
-        if (info[i].year == year)
-        {
+        //if (info[i].year == year)
+        //{
             if (tmp >= info[i].t)
                 tmp = info[i].t;
-        }
+        //}
     }
     return tmp;
 }
 
+/*int read_txt_file_to_info (char *name_of_file, struct sensor* info)
+{
+    FILE* f = fopen (name_of_file, "r");
+    if (f == NULL)
+    {
+        printf ("Error open file\n");
+    }
+    printf ("OPEN FILE IS OK +++++++++++++++++++++++++++++++++++++++++++++++\n");
+
+    int counter = 0;
+    uint16_t year; 
+    uint8_t month;
+    uint8_t day; 
+    uint8_t hour;
+    uint8_t minit; 
+    int8_t t;
+
+    while ((fscanf (f, "%d;%d;%d;%d;%d;%d\n", &year, &month, &day, &hour, &minit, &t)) != EOF)
+    {
+        printf ("WHILE IS OK +++++++++++++++++++++++++++++++++++++++++++++++\n");
+        AddRecord (info, counter++, year, month, day, hour, minit, t);
+        printf ("CLOSE RECORD IS OK +++++++++++++++++++++++++++++++++++++++++++++++\n");
+        print (info, counter);
+    }
+    printf ("CLOSE WHILE IS OK +++++++++++++++++++++++++++++++++++++++++++++++\n");
+    fclose (f);
+    return counter;
+}
+*/
 
 // ==============================================================================================
 // ================================= старые функции =============================================
@@ -133,6 +162,7 @@ void SortByDate (struct sensor* info, int n) // Сортировка по дат
 
 void AddRecord (struct sensor* info, int number, uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minit, int8_t t)
 {
+    //printf ("ADD_RECORD IS OK +++++++++++++++++++++++++++++++++++++++++++++++\n");
     info[number].year = year;
     info[number].month = month;
     info[number].day = day;

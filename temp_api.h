@@ -17,11 +17,13 @@ int8_t max_month_temperature (struct sensor* info, int n, uint8_t month);
 
 int8_t min_month_temperature (struct sensor* info, int n, uint8_t month);
 
-int average_annual_temperature (struct sensor* info, int n, uint16_t year);
+int average_annual_temperature (struct sensor* info, int n);
 
-int8_t max_annual_temperature (struct sensor* info, int n, uint16_t year);
+int8_t max_annual_temperature (struct sensor* info, int n);
 
-int8_t min_annual_temperature (struct sensor* info, int n, uint16_t year);
+int8_t min_annual_temperature (struct sensor* info, int n);
+
+//int read_txt_file_to_info (char *name_of_file, struct sensor* info);
 
 
 // ==============================================================================================
