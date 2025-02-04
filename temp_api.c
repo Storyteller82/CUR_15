@@ -2,11 +2,11 @@
 #include <stdint.h>
 #include "temp_api.h"
 
-int average_month_temperature(struct sensor *info, int n, uint8_t month)
+float average_month_temperature(struct sensor *info, long n, uint8_t month)
 {
-    int sum = 0, cnt = 0;
+    long sum = 0, cnt = 0;
 
-    for (int i = 0; i < n; i++)
+    for (long i = 0; i < n; i++)
     {
         if (info[i].month == month)
         {
@@ -14,15 +14,15 @@ int average_month_temperature(struct sensor *info, int n, uint8_t month)
             cnt++;
         }
     }
-    return sum / cnt;
+    return ((float) sum / (float) cnt);
 }
 
-int8_t max_month_temperature(struct sensor *info, int n, uint8_t month)
+int8_t max_month_temperature(struct sensor *info, long n, uint8_t month)
 {
     int8_t tmp = -120; 
 
 
-    for (int i = 0; i < n; i++)
+    for (long i = 0; i < n; i++)
     {
         if (info[i].month == month)
         {
@@ -33,11 +33,11 @@ int8_t max_month_temperature(struct sensor *info, int n, uint8_t month)
     return tmp;
 }
 
-int8_t min_month_temperature(struct sensor *info, int n, uint8_t month)
+int8_t min_month_temperature(struct sensor *info, long n, uint8_t month)
 {
    int8_t tmp = 120;
 
-    for (int i = 0; i < n; i++)
+    for (long i = 0; i < n; i++)
     {
         if (info[i].month == month)
         {
@@ -48,11 +48,11 @@ int8_t min_month_temperature(struct sensor *info, int n, uint8_t month)
     return tmp;
 }
 
-int average_annual_temperature(struct sensor *info, int n)
+float average_annual_temperature(struct sensor *info, long n)
 {
-    int sum = 0, cnt = 0;
+    long sum = 0, cnt = 0;
 
-    for (int i = 0; i < n; i++)
+    for (long i = 0; i < n; i++)
     {
        // if (info[i].year == year)
         //{
@@ -60,14 +60,14 @@ int average_annual_temperature(struct sensor *info, int n)
             cnt++;
         //}
     }
-    return sum / cnt;
+    return ((float) sum / (float) cnt);
 }
 
-int8_t max_annual_temperature(struct sensor *info, int n)
+int8_t max_annual_temperature(struct sensor *info, long n)
 {
     int8_t tmp = -120;
 
-    for (int i = 0; i < n; i++)
+    for (long i = 0; i < n; i++)
     {
        // if (info[i].year == year)
         //{
@@ -78,11 +78,11 @@ int8_t max_annual_temperature(struct sensor *info, int n)
     return tmp;
 }
 
-int8_t min_annual_temperature(struct sensor *info, int n)
+int8_t min_annual_temperature(struct sensor *info, long n)
 {
     int8_t tmp = 120;
 
-    for (int i = 0; i < n; i++)
+    for (long i = 0; i < n; i++)
     {
         //if (info[i].year == year)
         //{
@@ -93,42 +93,55 @@ int8_t min_annual_temperature(struct sensor *info, int n)
     return tmp;
 }
 
-/*int read_txt_file_to_info (char *name_of_file, struct sensor* info)
+//==================================================================================================================================================
+
+long read_txt_file_to_info (char *name_of_file, struct sensor* info)
 {
-    FILE* f = fopen (name_of_file, "r");
+    FILE* f;
+    f = fopen (name_of_file, "r");
     if (f == NULL)
     {
         printf ("Error open file\n");
     }
-    printf ("OPEN FILE IS OK +++++++++++++++++++++++++++++++++++++++++++++++\n");
-
-    int counter = 0;
-    uint16_t year; 
-    uint8_t month;
-    uint8_t day; 
-    uint8_t hour;
-    uint8_t minit; 
-    int8_t t;
-
-    while ((fscanf (f, "%d;%d;%d;%d;%d;%d\n", &year, &month, &day, &hour, &minit, &t)) != EOF)
+    else 
     {
-        printf ("WHILE IS OK +++++++++++++++++++++++++++++++++++++++++++++++\n");
-        AddRecord (info, counter++, year, month, day, hour, minit, t);
-        printf ("CLOSE RECORD IS OK +++++++++++++++++++++++++++++++++++++++++++++++\n");
-        print (info, counter);
+        printf ("OPEN FILE IS OK ++++++++++++++\n");
     }
-    printf ("CLOSE WHILE IS OK +++++++++++++++++++++++++++++++++++++++++++++++\n");
+
+    long counter = 0;
+    int n_scan = 0;
+    int year; 
+    int month;
+    int day; 
+    int hour;
+    int minit; 
+    int t;
+
+    while ((n_scan = fscanf (f, "%4u;%u;%u;%d;%d;%d;\n", &year, &month, &day, &hour, &minit, &t)) > 0)
+    {
+        if (n_scan < 6)
+        {
+            char s[20], c;
+            n_scan = fscanf(f, "%[^\n]%c", s, &c);
+            printf("Wrong format in line %s\n", s);
+            continue;
+        }
+        else
+        {
+            AddRecord (info, counter++, year, month, day, hour, minit, t);
+        }
+    }
     fclose (f);
     return counter;
 }
-*/
+
 
 // ==============================================================================================
 // ================================= старые функции =============================================
 // ==============================================================================================
 
 
-void changeIJ (struct sensor* info, int i, int j) // Обмен местами
+void changeIJ (struct sensor* info, long i, long j) // Обмен местами
 {
     struct sensor temp;
     temp = info[i];
@@ -136,10 +149,10 @@ void changeIJ (struct sensor* info, int i, int j) // Обмен местами
     info[j] = temp;    
 }
 
-void SortByT (struct sensor* info, int n) // Упорядочить по возрастанию температуры
+void SortByT (struct sensor* info, long n) // Упорядочить по возрастанию температуры
 {
-    for (int i = 0; i < n; ++i)
-        for (int j = i; j < n; ++j)
+    for (long i = 0; i < n; ++i)
+        for (long j = i; j < n; ++j)
             if (info[i].t >= info[j].t)
                 changeIJ(info, i, j);
 }
@@ -151,16 +164,16 @@ unsigned int DateToInt(struct sensor *info) // Преобразовать дат
     return info->year << 21 |info->month << 17 | info->day << 12 | info->hour << 7 | info->minit;
 } // --------------------^^-----------------^^----------------^^-----------------^ все влезло в 4 байта
 
-void SortByDate (struct sensor* info, int n) // Сортировка по дате
+void SortByDate (struct sensor* info, long n) // Сортировка по дате
 {
-    for (int i = 0; i < n; ++i)
-        for (int j = i; j < n; ++j)
-            if (DateToInt (info + i) >= DateToInt (info +j))
+    for (long i = 0; i < n; ++i)
+        for (long j = i; j < n; ++j)
+            if (DateToInt (info + i) >= DateToInt (info + j))
                 changeIJ (info, i, j);
 }
 //==================================================================================================
 
-void AddRecord (struct sensor* info, int number, uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minit, int8_t t)
+void AddRecord (struct sensor* info, long number, uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minit, int8_t t)
 {
     //printf ("ADD_RECORD IS OK +++++++++++++++++++++++++++++++++++++++++++++++\n");
     info[number].year = year;
@@ -173,15 +186,15 @@ void AddRecord (struct sensor* info, int number, uint16_t year, uint8_t month, u
 
 // =================================================================================================
 
-void print (struct sensor* info, int number)
+void print (struct sensor* info, long number)
 {
     printf ("================================================\n");
-        for (int i = 0; i < number; i++)
+        for (long i = 0; i < number; i++)
             printf ("%04d-%02d-%02d %02d:%02d t = %3d\n", info[i].year, info[i].month, info[i].day, info[i].hour, info[i].minit, info[i].t);
 }
 
 // ====================================================================================================
-void load_bin (struct sensor* info, int number)
+/*void load_bin (struct sensor* info, int number)
 {
     FILE* f = fopen ("sensor.bin", "rb");
     // ghjdthrf yf jnrhsnbt
@@ -218,3 +231,4 @@ int AddInfo (struct sensor* info)
         AddRecord (info, counter++, 2021,9,5,17,24,1);
         return counter;
 }
+*/
